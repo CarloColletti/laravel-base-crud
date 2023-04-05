@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Model\song;
+use App\Models\song;
 
 class songController extends Controller
 {
     public function songList(){
         $songs = Song::all();
 
-        return view('song-list', compact('songs'));
+        return view('homepage', compact('songs'));
     }
 }
