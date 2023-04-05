@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\songController;
+use App\Http\Controllers\pageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,7 @@ use App\Http\Controllers\songController;
 //     return view('welcome');
 // });
 
-Route::get('/', [ songController::class, 'songList']) ->name('homepage');
+Route::get('/', [pageController::class, 'index' ])->name('homepage');
+
+
+Route::resource('songs', songController::class);
