@@ -20,7 +20,7 @@ class songSeeder extends Seeder
     public function run(Faker $faker)
     {
 
-      for($i = 0; $i < 15; $i++){
+      for($i = 0; $i < 300; $i++){
         $new_song = new song;
   
   
