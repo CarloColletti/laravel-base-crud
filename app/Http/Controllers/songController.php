@@ -14,7 +14,7 @@ class songController extends Controller
      */
     public function index()
     {
-        $songs = Song::limit(15)->get();
+        $songs = Song::paginate(15);
         
         // dd($songs);
         return view('songs.index', compact('songs'));
