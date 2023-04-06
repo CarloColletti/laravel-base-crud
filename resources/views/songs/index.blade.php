@@ -1,11 +1,21 @@
 @extends('layouts.app')
 
+@section('cdn')
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+@endsection
+
 @section('title')
-    Songs
+  Songs
 @endsection
 
 @section('main-content')
   <div class="container py-5">
+    <div class="row">
+      <form class="d-flex">
+        <input class="form-control me-2" type="text" name="term" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -24,7 +34,11 @@
           <td>{{$song->title}}</td>
           <td>{{$song->author}}</td>
           <td>{{$song->editor}}</td>
-          <td><a href="{{route('songs.show',['song' => $song])}}">Dettaglio</a></td>
+          <td>
+            <a href="{{route('songs.show',['song' => $song])}}">
+              <i class="bi bi-card-list"></i>
+            </a>
+          </td>
         </tr>   
         @endforeach
 
