@@ -33,7 +33,7 @@ class songController extends Controller
      */
     public function create()
     {
-        //
+        return view('songs.create');
     }
 
     /**
@@ -44,7 +44,27 @@ class songController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+// 1- procedura per salvare tutti i dati singolarmente 
+        $song = new song;
+        $song ->title = $data["title"];
+        $song ->album = $data["album"];
+        $song ->author = $data["author"];
+        $song ->editor = $data["editor"];
+        $song->length = '3.15';
+        $song->poster = 'https://picsum.photos/200/200';
+
+        $song->save();
+
+// 2- se i data corrispondono con il tipo richiesto si usa un comando solo 
+        // da sistemare 
+        // $song = new song;
+        // $song->fill($data);
+        // $song->length = '3.15';
+        // $song->poster = 'https://picsum.photos/200/200';
+        // $song->save();
+
+        return redirect ()->route('songs.show', $song);
     }
 
     /**
