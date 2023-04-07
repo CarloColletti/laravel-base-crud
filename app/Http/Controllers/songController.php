@@ -44,6 +44,29 @@ class songController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'title' => 'required|max:50|unique:songs',
+            'album'=> 'required|max:50|unique:songs', 
+            'author'=> 'required|max:50|unique:songs',
+            'editor'=> 'required|max:50|unique:songs',
+        ],[
+            'title.required'=> 'Il titlo è obbligatorio',
+            'album.required'=> "Il nome dell'album è obbligatorio",
+            'author.required'=> "Il nome dell'autore è obbligatorio",
+            'editor.required'=> "Il nome dell'editor è obbligatorio",
+
+            'title.max'=> 'Il titolo non puo superare i 50 caratteri',
+            'album.max'=> "L'album non puo superare i 50 caratteri",
+            'author.max'=> "L'autore non puo superare i 50 caratteri",
+            'editor.max'=> "L'editor non puo superare i 50 caratteri",
+
+            'title.unique'=> 'titolo già esistente',
+            'album.unique'=> 'album già esistente',
+            'author.unique'=> 'autore già esistente',
+            'editor.unique'=> 'editor già esistente',
+        ]);
+
         $data = $request->all();
 // 1- procedura per salvare tutti i dati singolarmente 
         // $song = new song;
