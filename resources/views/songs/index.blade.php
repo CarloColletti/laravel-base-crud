@@ -45,8 +45,12 @@
           <td>{{$song->editor}}</td>
           <td>
             <a href="{{route('songs.show',['song' => $song])}}">
-              <i class="bi bi-card-list"></i>
+              <i class="bi bi-card-list px-2"></i>
             </a>
+            <a href="{{route('songs.edit',['song' => $song])}}">
+              <i class="bi bi-pencil-square px-2"></i>
+            </a>
+            
           </td>
         </tr>   
         @endforeach
