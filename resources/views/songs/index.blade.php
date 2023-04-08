@@ -44,13 +44,17 @@
           <td>{{$song->author}}</td>
           <td>{{$song->editor}}</td>
           <td>
-            <a href="{{route('songs.show',['song' => $song])}}">
-              <i class="bi bi-card-list px-2"></i>
+            <a href="{{route('songs.show',['song' => $song])}}" class="px-2">
+              <i class="bi bi-card-list"></i>
             </a>
-            <a href="{{route('songs.edit',['song' => $song])}}">
-              <i class="bi bi-pencil-square px-2"></i>
+            <a href="{{route('songs.edit',['song' => $song])}}" class="px-2">
+              <i class="bi bi-pencil-square"></i>
             </a>
-            
+            <form action="{{route('songs.destroy',['song' => $song])}}" method="POST" class="px-2 text-danger">
+              @csrf
+              @method('delete')
+              <button class="bi bi-trash"></button>
+            </form>
           </td>
         </tr>   
         @endforeach

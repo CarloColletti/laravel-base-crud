@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\song;
 
+use Illuminate\Support\Facades\Validator;
+
 class songController extends Controller
 {
     /**
@@ -147,6 +149,11 @@ class songController extends Controller
 
         $song->update($data);
 
+
+        // validazione tramite funzione privata
+        // $data = $this->validation($request->all(), $song->id);
+        // $song->update($data);
+
         return redirect ()->route('songs.show', $song);
     }
 
@@ -156,8 +163,48 @@ class songController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(song $song)
     {
-        //
+        $song->delete();
+
+        return redirect ()->route('songs.index');
+    }
+
+
+    // metodo per avere direttamnte una funzione la quale verra invocata 
+    // quando si deve effettuare la validazione dei dati
+    private function validation($data, $id = null) {
+
+        $unique_title_validation = ($id) ? "|unique:songs,title,$id" : "|unique:songs";
+        $unique_album_validation = ($id) ? "|unique:songs,album,$id" : "|unique:songs";
+        $unique_author_validation = ($id) ? "|unique:songs,author,$id" : "|unique:songs";
+        $unique_editor_validation = ($id) ? "|unique:songs,editor,$id" : "|unique:songs";
+
+        $validator = Validator::make(
+            $data,
+            [
+            'title' => 'required|max:50|unique:songs,title,'.$unique_title_validation.' ',
+            'album' => 'required|max:50|unique:songs,album,'.$unique_album_validation.' ', 
+            'author' => 'required|max:50|unique:songs,author,'.$unique_author_validation.' ',
+            'editor' => 'required|max:50|unique:songs,editor,'.$unique_editor_validation.' ',
+            ],[
+            'title.required'=> 'Il titlo è obbligatorio',
+            'album.required'=> "Il nome dell'album è obbligatorio",
+            'author.required'=> "Il nome dell'autore è obbligatorio",
+            'editor.required'=> "Il nome dell'editor è obbligatorio",
+
+            'title.max'=> 'Il titolo non puo superare i 50 caratteri',
+            'album.max'=> "L'album non puo superare i 50 caratteri",
+            'author.max'=> "L'autore non puo superare i 50 caratteri",
+            'editor.max'=> "L'editor non puo superare i 50 caratteri",
+
+            'title.unique'=> 'titolo già esistente',
+            'album.unique'=> 'album già esistente',
+            'author.unique'=> 'autore già esistente',
+            'editor.unique'=> 'editor già esistente',
+            ]
+        )->validation();
+
+        return $validator;
     }
 }
