@@ -50,18 +50,50 @@
             <a href="{{route('songs.edit',['song' => $song])}}" class="px-2">
               <i class="bi bi-pencil-square"></i>
             </a>
-            <form action="{{route('songs.destroy',['song' => $song])}}" method="POST" class="px-2 text-danger">
-              @csrf
-              @method('delete')
-              <button class="bi bi-trash"></button>
-            </form>
+            <button type="button" class="btn bi bi-trash" data-bs-toggle="modal" data-bs-target="#delete-modal-{{$song->id}}"></button>
+
           </td>
         </tr>   
         @endforeach
-
       </tbody>
     </table>
 
+
+    {{-- pagination  --}}
     {{$songs->links('pagination::bootstrap-5')}}
+
+
   </div>
+@endsection
+  
+  
+  
+@section('modals')
+  <!-- Modal -->
+  @foreach ($songs as $song)
+  <div class="modal fade" id="delete-modal-{{$song->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Conferma di Eliminazione della canzone</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Se si procede, l'elemento selezionato verrà eliminato.<br>
+          L'operazione non è reversibile <br>
+          Vuoi davvero procedere?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+          <form action="{{route('songs.destroy',['song' => $song])}}" method="POST" class="px-2 text-danger">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger">Elimina</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  @endforeach
+
 @endsection
